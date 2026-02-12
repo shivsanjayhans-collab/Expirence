@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Instagram Clone PWA</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <!-- Swiper.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      /* Warm gradient background */
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #fbc2eb 100%);
+    }
+    .swiper {
+      width: 100%;
+      height: 100vh;
+    }
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      position: relative;
+    }
+    .swiper-slide img {
+      width: 80%;
+      height: auto;
+      max-height: 90vh;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+
+
+    .note-message {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #7a4c5a;
+      margin-bottom: 10px;
+    }
+
+    .note-footer {
+      font-size: 0.8rem;
+      color: #c07a8b;
+      text-align: right;
+      font-style: italic;
+    }
+    .text-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      text-align:center;
+      color: #fff;
+      font-size: 15px;
+      font-weight: normal;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.3);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+    audio {
+      display: none; /* hidden until triggered */
+    }
+    @media (max-width: 600px) {
+      .text-overlay {
+        font-size: 16px;
+        padding: 10px 10px;
+      }
+      .swiper-slide img {
+        max-height: 10vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Swiper Container -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <!-- Landing Slide -->
+      <div class="swiper-slide">
+        <img src="1.png" alt="Hug Day">
+        <div class="text-overlay">
+        <b>Happy Hug Day 🤗❤️</b><br><br>
+Bina puche gale laga saku 🤲💞,<br>
+Bas itna haq chahiye 🌹✨<br><br>
+<b>"You're becoming a habit I won't break."</b>
+
+        </div>
+      </div>
+      <!-- Photo Cards -->
+      <div class="swiper-slide">
+        <img src="6.png" alt="Pic 1">
+        <div class="text-overlay">Idk what you're doing to me...but even your name on my screen makes me smile like an idiot. A day without talking to you feels like someone pressed pause on my whole mood... everything goes dull until I hear your voice or see your name pop up again. And I swear, I'm totally mad, mad for your voice, mad for your attention. It's embarrassing how fast my heart reacts to you... but honestly? I kinda love being this obsessed with you.
+
+<br><br><b>I Just Love Loving You</b></div>
+      </div>
+      <div class="swiper-slide">
+        
+        <img src="3.png" alt="Pic 2">
+        <div class="text-overlay"><b>You are special ✨</b><br><br>
+You are the only one for whom I wouldn’t mind losing my sleep 🌙💭,<br> the one I can never get tired of talking to 🗣️❤️,<br> and the one who crosses my mind constantly throughout the day 💭💫.
+<br><br>You are the only one who can make me smile 😊 without any intention and affect my emotions with every action of yours 💕.
+I can’t explain in words how much you mean to me ❤️🌹
+</div>
+      </div>
+      <div class="swiper-slide">
+        <img src="4.png" alt="Pic 3">
+        <div class="text-overlay">I hope the smile on your face<br> stays permanently, <br> because it's one of the most, beautiful things that exist.</div>
+      </div>
+      <div class="swiper-slide">
+        <img src="2.png" alt="Pic 4">
+        <div class="text-overlay">In my story you'll always be my <br><br> <b>Favourite Chapter!!</div>
+      </div>
+    </div>
+    <!-- Pagination & Navigation -->
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Swiper.js Script -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    const music = document.getElementById("bg-music");
+
+    const swiper = new Swiper('.swiper', {
+      loop: false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      on: {
+        slideChange: function () {
+          // Start music only when leaving the landing slide
+          if (this.activeIndex === 1) {
+            music.play().catch(err => console.log("Autoplay blocked:", err));
+          }
+        }
+      }
+    });
+
+    // Register Service Worker for PWA
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("Service Worker registered"));
+    }
+  </script>
+</body>
+</html>
